@@ -1,24 +1,18 @@
-import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem import RSLPStemmer
 from nltk.corpus import stopwords
-import os
+import nltk
 
-def download_nltk_resources():
-    resources = ['rslp', 'punkt', 'stopwords']
-    for resource in resources:
-        try:
-            nltk.data.find(f'tokenizers/{resource}') if resource == 'punkt' else nltk.data.find(f'stemmers/{resource}') if resource == 'rslp' else nltk.data.find(f'corpora/{resource}')
-        except LookupError:
-            nltk.download(resource, download_dir='/opt/render/nltk_data')
-            nltk.data.path.append('/opt/render/nltk_data')
-
-# Garante que os recursos sejam baixados
-download_nltk_resources()
-
-# Configurações após garantir os recursos
-stemmer = RSLPStemmer()
-stop_words = set(stopwords.words('portuguese'))
+# Verifica e baixa recursos se necessário
+try:
+    stemmer = RSLPStemmer()
+    stop_words = set(stopwords.words('portuguese'))
+except LookupError:
+    nltk.download('rslp')
+    nltk.download('punkt')
+    nltk.download('stopwords')
+    stemmer = RSLPStemmer()
+    stop_words = set(stopwords.words('portuguese'))
 
 def preprocessar_texto(texto: str) -> str:
     palavras = word_tokenize(texto.lower())
