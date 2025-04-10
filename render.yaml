@@ -1,9 +1,15 @@
 services:
-  # A Docker web service
-  - type: web
-    name: fastapi-example
+  - name: matchmaker-api
+    type: web
     runtime: python
-    plan: free
-    autoDeploy: false
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install -r requirements.txt && python -m nltk.downloader rslp punkt stopwords
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: SUPABASE_URL
+        fromDatabase:
+          name: supabase
+          property: connectionString
+      - key: SUPABASE_KEY
+        fromDatabase:
+          name: supabase
+          property: password
