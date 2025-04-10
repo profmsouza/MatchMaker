@@ -1,1 +1,6 @@
-fastapi[all]
+fastapi
+uvicorn
+python-dotenv
+nltk
+scikit-learn
+supabase
