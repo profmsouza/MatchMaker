@@ -5,11 +5,10 @@ services:
     buildCommand: |
       pip install --upgrade pip
       pip install -r requirements.txt
-      python -c "import nltk; nltk.download('rslp', download_dir='/opt/render/nltk_data'); nltk.download('punkt', download_dir='/opt/render/nltk_data'); nltk.download('stopwords', download_dir='/opt/render/nltk_data')"
+      chmod +x prestart.sh
+      ./prestart.sh
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
-      - key: NLTK_DATA
-        value: /opt/render/nltk_data
       - key: SUPABASE_URL
         fromDatabase:
           name: supabase
