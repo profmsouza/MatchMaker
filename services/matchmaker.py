@@ -1,19 +1,10 @@
 from database import supabase
 from utils import preprocessar_texto
-from nltk.stem import RSLPStemmer
-from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import nltk
-
-nltk.download('rslp')
-nltk.download('punkt')
-nltk.download('stopwords')
 
 class Matchmaker:
     def __init__(self):
-        self.stemmer = RSLPStemmer()
-        self.stop_words = set(stopwords.words('portuguese'))
         self.vectorizers = {
             'colaboracao': TfidfVectorizer(),
             'permuta': TfidfVectorizer(),
